@@ -218,17 +218,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         let curImage = generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [curImage], applicationActivities: nil)
-        
-        //these activities will not cause meme to be saved, all others will e.g. mail, posts .etc
-        let activityToSave = [UIActivityTypeSaveToCameraRoll, UIActivityTypeAssignToContact, UIActivityTypePrint,UIActivityTypeCopyToPasteboard]
-        
+       
         //set completion handler to show sent Memes
         activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
             if completed == true {
-                if find(activityToSave,activityType) == nil { //save only certain activities, this one is not in the list
-                    self.save()  //save memes that have been sent or posted
-                }
-            }
+                self.save()  //save memes that have been sent or posted
+             }
             
             //show sent memes
             var controller: UITabBarController
