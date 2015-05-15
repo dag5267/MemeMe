@@ -26,8 +26,7 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
     
     override func viewWillAppear(animated: Bool) {
         self.tblView.reloadData() //update display because items might have been removed
-    }
-    
+    }    
     
     override func viewDidLoad() {
         // get saved Memes

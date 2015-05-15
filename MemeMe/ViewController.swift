@@ -37,8 +37,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         super.viewWillAppear(animated)
         self.subscribeToKeyboardNotifications()
-        
-        
+                
         //reset text in top and bottom text field
         bottomText.text = "BOTTOM"
         topText.text = "TOP"
@@ -55,8 +54,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         {
             btnCancel.enabled = false //disable cancel button if there are no saved memes
         }
-
-        
     }
     
     override func viewDidLoad() {
@@ -96,7 +93,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         topText.hidden = true;
         bottomText.hidden = true;
         
-        
         //set attributes for text
         topText.defaultTextAttributes = memeTextAttributes
         bottomText.defaultTextAttributes = memeTextAttributes
@@ -117,14 +113,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
     }
     
-    
     func pickAlbum() { //pick picture to memme from the album
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
         pickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(pickerController, animated: true, completion: nil)
     }
-    
     
     func imagePickerController(picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {  //process chosen image
@@ -220,22 +214,30 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return memedImage //return with edited image
     }
     
-        
     @IBAction func startActivityViewController(sender: AnyObject) {
-       
-        let curImage = generateMemedImage()
         
+        let curImage = generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [curImage], applicationActivities: nil)
         
+        //these activities will not cause meme to be saved, all others will e.g. mail, posts .etc
+        let activityToSave = [UIActivityTypeSaveToCameraRoll, UIActivityTypeAssignToContact, UIActivityTypePrint,UIActivityTypeCopyToPasteboard]
+        
         //set completion handler to show sent Memes
-        activityViewController.completionWithItemsHandler = {(activityType, completed, returnedItems, activityError) in
+        activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+            if completed == true {
+                if find(activityToSave,activityType) == nil { //save only certain activities, this one is not in the list
+                    self.save()  //save memes that have been sent or posted
+                }
+            }
             
+            //show sent memes
             var controller: UITabBarController
             controller = self.storyboard?.instantiateViewControllerWithIdentifier("sbTabBarController") as! UITabBarController
             self.presentViewController(controller, animated: true, completion: nil);
         }
         
-        presentViewController(activityViewController, animated: true, completion: save) //display activity controller
+        presentViewController(activityViewController, animated: true, completion: nil)  //display activity controller
+        
     }
     
     
