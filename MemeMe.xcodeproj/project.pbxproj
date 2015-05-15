@@ -89,8 +89,8 @@
 		2CC07CF21AF98DB8008DD6AF /* MemeMe */ = {
 			isa = PBXGroup;
 			children = (
-				2CC07CF51AF98DB8008DD6AF /* AppDelegate.swift */,
 				2CC07D221AFB03C8008DD6AF /* MemePicture.swift */,
+				2CC07CF51AF98DB8008DD6AF /* AppDelegate.swift */,
 				2CC07D181AF99191008DD6AF /* DataTypes.swift */,
 				2CC07CFA1AF98DB8008DD6AF /* ViewController.swift */,
 				2CC07CFC1AF98DB8008DD6AF /* Main.storyboard */,
